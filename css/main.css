@@ -1,0 +1,259 @@
+/* ────────────────────────────────────────────────────────────
+   Lab‑Notebook Theme • Fluid Layout Edition (2025‑ready)
+   + Graph‑Paper Background & Chemistry Doodles
+   + Marker‑Colour Headings
+   + Preserves Original Layout & Components
+   ──────────────────────────────────────────────────────────── */
+
+/* 1) WEB FONTS */
+@import url('https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&family=Fira+Code:wght@400;700&display=swap');
+
+/* 2) DESIGN TOKENS */
+:root {
+  /* Typography */
+  --font-marker : "Gloria Hallelujah", "Comic Sans MS", cursive;
+  --font-code   : "Fira Code", "Courier New", monospace;
+  --font-body   : "Inter", "Helvetica Neue", Arial, sans-serif;
+  --font-serif  : "Times New Roman", Georgia, serif;
+
+  /* Notebook palette */
+  --paper-bg   : #fff;
+  --grid-color : #c8d0ff;             /* light blue graph lines */
+  --ink        : #111827;             /* near‑black */
+  --ink-soft   : #374151;             /* slate */
+  --rule       : #a5b4fc;             /* darker grid for borders */
+  --accent     : #1d4ed8;             /* notebook blue */
+
+  /* Marker colours for headings */
+  --marker-red    : #e63946;
+  --marker-orange : #fb8500;
+  --marker-green  : #2a9d8f;
+  --marker-purple : #6a4c93;
+  --marker-blue   : #457b9d;
+
+  /* Layout */
+  --page-width : clamp(90vw, 60ch, 80rem);
+  --line-height   : 1.6;
+  --baseline-unit : 0.25rem;
+  --space-xs      : 0.25rem;
+  --space-sm      : 0.5rem;
+  --space-md      : 1rem;
+  --space-lg      : 1.5rem;
+  --space-xl      : 2rem;
+
+  /* Motion */
+  --t-fast  : 160ms;
+  --t-slow  : 400ms;
+  --bezier  : cubic-bezier(.4,0,.2,1);
+
+  /* Shadow */
+  --shadow : 0 3px 6px rgba(0,0,0,.08);
+
+  scroll-behavior: smooth;
+}
+
+/* 3) BASELINE RESET */
+*,*::before,*::after{ box-sizing:border-box;margin:0;padding:0; }
+html{ font-size:100%; }
+
+/* 4) GRAPH‑PAPER BACKGROUND  + DOODLES */
+body{
+  margin:0;
+  font-family:var(--font-body);
+  line-height:var(--line-height);
+  color:var(--ink);
+  background:var(--paper-bg);
+  -webkit-font-smoothing:antialiased;
+  content-visibility:auto;
+  contain-intrinsic-size:1px 5000px;
+  position:relative;
+}
+/* Grid overlay */
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  background-image:
+    repeating-linear-gradient(0deg , var(--grid-color) 0 1px , transparent 1px 28px),
+    repeating-linear-gradient(90deg, var(--grid-color) 0 1px , transparent 1px 28px);
+  pointer-events:none;
+  z-index:-2;
+}
+/* Chemistry doodles – small transparent PNGs sprinkled around */
+body::after{
+  content:"";
+  position:fixed;
+  inset:0;
+  background-image:url("/assets/img/doodle-benzene.png"),url("/assets/img/doodle-protein.png"),url("/assets/img/doodle-flask.png");
+  background-repeat:no-repeat;
+  background-size:120px,160px,100px;
+  background-position:10% 15%, 75% 75%, 50% 30%;
+  opacity:.2;
+  pointer-events:none;
+  z-index:-1;
+}
+
+/* 5) HEADER */
+.site-header{ background:none;border:none;padding:calc(var(--baseline-unit)*6) 0; }
+.header-container{ display:flex;flex-direction:column;align-items:center;gap:calc(var(--baseline-unit)*3); }
+.logo-link{
+  font-family:var(--font-marker);
+  font-size:2.3rem;
+  font-weight:700;
+  color:var(--marker-blue);
+  text-decoration:none;
+}
+
+/* Theme toggle retains original behaviour */
+#theme-toggle{ background:none;border:none;font-size:1.6rem;cursor:pointer;transition:transform var(--t-fast);color:var(--marker-blue); }
+#theme-toggle:hover{ transform:scale(1.2); }
+
+.nav-links{ display:flex;gap:calc(var(--baseline-unit)*8);list-style:none; }
+.nav-link{
+  font-family:var(--font-marker);
+  font-size:1.05rem;
+  color:var(--marker-green);
+  position:relative;
+}
+.nav-link::after{
+  content:"";position:absolute;bottom:-.2em;left:0;width:100%;height:2px;background:currentColor;transform:scaleX(0);transform-origin:right;transition:transform var(--t-fast) var(--bezier);
+}
+.nav-link:hover::after{ transform:scaleX(1);transform-origin:left; }
+
+/* 6) MAIN LAYOUT */
+.container,main{
+  width:min(95%,var(--page-width));
+  margin:calc(var(--baseline-unit)*6) auto;
+  padding:calc(var(--baseline-unit)*8) calc(var(--baseline-unit)*10);
+  background:rgba(255,255,255,.95);
+  box-shadow:var(--shadow);
+  border:1px solid var(--rule);
+}
+
+/* 7) TYPOGRAPHY */
+h1,h2,h3,h4,h5,h6{
+  font-family:var(--font-marker);
+  font-weight:700;
+  margin:calc(var(--baseline-unit)*8) 0 calc(var(--baseline-unit)*4);
+}
+/* Marker colour mapping */
+h1{ color:var(--marker-red);   font-size:2.4rem; border-bottom:2px dashed var(--marker-red); padding-bottom:.3em; }
+h2{ color:var(--marker-blue);  font-size:1.9rem; }
+h3{ color:var(--marker-green); font-size:1.6rem; }
+h4{ color:var(--marker-orange);font-size:1.3rem; }
+h5{ color:var(--marker-purple);font-size:1.1rem; }
+h6{ color:var(--ink-soft);    font-size:1rem; }
+
+p,ul,ol,blockquote,table,figure{ margin:calc(var(--baseline-unit)*4) 0; }
+ul,ol{ padding-left:1.3em; }
+blockquote{
+  border-left:4px solid var(--marker-purple);
+  padding-left:1em;
+  color:var(--ink-soft);
+  font-style:italic;
+}
+
+/* 8) LINKS */
+a{ color:var(--marker-orange); text-decoration:none; border-bottom:2px solid transparent; transition:border-color var(--t-fast) var(--bezier); }
+a:hover,a:focus-visible{ border-bottom-color:currentColor; }
+
+/* 9) TABLES */
+table{ width:100%;border-collapse:collapse;margin:calc(var(--baseline-unit)*6) 0;font-size:.95rem; }
+th,td{ padding:.5em .75em;border:1px solid var(--rule); }
+th{ background:#f0f4ff;font-weight:700;color:var(--ink); }
+
+/* 10) FIGURES */
+figure{ margin:calc(var(--baseline-unit)*6) 0; }
+figcaption{ font-size:.9rem;color:var(--ink-soft);text-align:center;margin-top:.5em;font-style:italic; }
+
+/* 11) BUTTONS */
+.btn{
+  display:inline-block;
+  font-family:var(--font-marker);
+  font-size:.95rem;
+  padding:.6em 1.2em;
+  color:#fff;
+  background:var(--marker-purple);
+  border:none;border-radius:4px;
+  cursor:pointer;
+  transition:background var(--t-fast) var(--bezier),transform var(--t-fast);
+}
+.btn:hover{ background:#8d6cb5; transform:translateY(-2px); }
+
+/* Dark-mode support */
+body.dark-mode {
+  --paper-bg:#121212;
+  --ink:#e1e1e1;
+  --ink-soft:#bbb;
+  --rule:#333;
+  background:var(--paper-bg);
+}
+body.dark-mode .container,
+body.dark-mode main {
+  background:#1e1e1e;
+}
+
+
+/* 12) CONTACT FORM */
+.contact-form input,.contact-form textarea{
+  width:100%;font-family:var(--font-body);
+  padding:.75em 1em;border:1px solid var(--rule);
+  border-radius:4px;background:#fafaff;
+  transition:border-color var(--t-fast) var(--bezier),box-shadow var(--t-fast) var(--bezier);
+}
+.contact-form input:focus,.contact-form textarea:focus{
+  outline:none;border-color:var(--marker-blue);
+  box-shadow:0 0 0 3px rgba(29,78,216,.15);
+}
+
+/* 13) RESEARCH VIEWER */
+.research-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* now exactly 50% / 50% */
+  gap: var(--space-lg);
+}
+.research-viewer {
+  position: sticky; top: var(--space-lg);
+  padding: var(--space-md);
+  border: 1px solid var(--rule);
+  background: #fff; box-shadow: var(--shadow);
+  min-height: 60vh;
+  display: flex; flex-direction: column;
+}
+.research-viewer .pdf-controls button:hover {
+  background:var(--rule);
+}
+.research-viewer .pdf-container {
+  flex:1; overflow:hidden;
+}
+.research-viewer iframe,
+.research-viewer img {
+  width:100%; height:100%;
+  border:none;
+  object-fit:contain;
+}
+
+/* 14) GALLERY */
+.gallery-grid{ display:grid;grid-template-columns:repeat(2,1fr);gap:var(--space-lg);margin:var(--space-lg) 0; }
+@media(max-width:600px){ .gallery-grid{ grid-template-columns:1fr; } }
+.gallery-item{ position:relative;overflow:hidden;cursor:pointer;border:1px solid var(--rule);box-shadow:var(--shadow);transition:transform var(--t-fast) var(--bezier); }
+.gallery-item:hover{ transform:translateY(-3px); }
+.gallery-item img{ display:block;width:100%;height:auto;transition:transform var(--t-fast) var(--bezier);filter:grayscale(.15); }
+.gallery-item:hover img{ transform:scale(1.05);filter:grayscale(0); }
+.gallery-item figcaption{
+  position:absolute;bottom:0;left:0;width:100%;padding:var(--space-sm);
+  background:rgba(0,0,0,.6);color:#fff;font-family:var(--font-marker);
+  font-size:.9rem;text-align:center;opacity:0;transition:opacity var(--t-fast) var(--bezier);
+}
+.gallery-item:hover figcaption{ opacity:1; }
+
+/* 15) REVEAL ANIMATION */
+.section,.reveal{ opacity:0;transform:translateY(12px);transition:all var(--t-slow) var(--bezier); }
+.section.visible,.reveal.visible{ opacity:1;transform:none; }
+
+/* 16) RESPONSIVE */
+@media(max-width:600px){
+  .container,main{ padding:calc(var(--baseline-unit)*6); }
+  h1{ font-size:2rem; }
+  .nav-links{ flex-wrap:wrap;gap:1rem; }
+}
